@@ -34,5 +34,5 @@ function sendNotification() {
 }
 
 // Send a notification every X minutes
-let numMinutes = 10;
+let numMinutes = 0.3;
 setInterval(sendNotification, 60 * numMinutes * 1000);
