@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Edit List</h1>
+      <form action="{{ url_for('edit_list', list_id=list.id) }}" method="POST" class="mb-3">
+        <div class="mb-3">
+          <label for="name" class="form-label">List Name</label>
+          <input type="text" class="form-control" id="name" name="name" value="{{ list.name }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+      <h2 class="mb-3">Items</h2>
+      <form action="{{ url_for('new_item', list_id=list.id) }}" method="POST" class="mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" name="description" placeholder="New Item Description" required>
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+      </form>
+      <ul class="list-group">
+        {% for item in list.items %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ item.description }}</span>
+            <div>
+              <button class="btn btn-secondary btn-sm edit-item-btn">Edit</button>
+              <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST" class="d-inline-block">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
+            <form action="{{ url_for('edit_item', item_id=item.id) }}" method="POST" class="edit-item-form d-none w-100 mt-3">
+              <div class="input-group">
+                <input type="text" class="form-control" name"description" value="{{ item.description }}" required>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- JavaScript code to handle inline editing of items -->
+    <script>
+      // Get all the "Edit" buttons on the page
+      const editItemBtns = document.querySelectorAll('.edit-item-btn');
+
+      // Add a click event listener to each "Edit" button
+      editItemBtns.forEach(btn => {
+        btn.addEventListener('click', event => {
+          // Get the parent list item element
+          const listItem = event.target.closest('.list-group-item');
+
+          // Hide the item description and "Edit"/"Delete" buttons
+          listItem.querySelector('span').classList.add('d-none');
+          listItem.querySelector('div').classList.add('d-none');
+
+          // Show the edit item form
+          listItem.querySelector('.edit-item-form').classList.remove('d-none');
+        });
+      });
+    </script>
+
+  </body>
+</html>

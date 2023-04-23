@@ -1,0 +1,35 @@
+<div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ list.id }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse{{ list.id }}" aria-expanded="false" aria-controls="collapse{{ list.id }}">
+            {{ list.name }}
+        </button>
+    </h2>
+    <div id="collapse{{ list.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ list.id }}"
+        data-bs-parent="#accordion">
+        <div class="accordion-body">
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <form action="/list/{{ list.id }}/generate_tasks" method="POST"
+                        hx-post="/list/{{ list.id }}/generate_tasks" hx-target="#tasks{{ list.id }}" hx-swap="innerHTML"
+                        hx-indicator="#spinner">
+                        <button type="submit" class="btn btn-primary">New tasks</button>
+                    </form>
+                </div>
+                <div class="col-auto">
+                    <form action="/list/{{ list.id }}/delete" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+                <div class="col-auto">
+                    <div id="notification-toggle-{{ list.id }}">
+                        {% include 'notification_toggle.html' %}
+                    </div>
+                </div>
+            </div>
+            <div id="tasks{{ list.id }}">
+                {% include 'accordion_tasks.html' %}
+            </div>
+        </div>
+    </div>
+</div>

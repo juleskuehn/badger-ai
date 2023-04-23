@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo Lists</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Todo Lists</h1>
+      <form action="{{ url_for('new_list') }}" method="POST" class="mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" name="name" placeholder="New List Name" required>
+          <button type="submit" class="btn btn-primary">Create List</button>
+        </div>
+      </form>
+      <ul class="list-group">
+        {% for list in lists %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ list.name }}
+            <div>
+              <a href="{{ url_for('view_list', list_id=list.id) }}" class="btn btn-secondary btn-sm">View</a>
+              <a href="{{ url_for('edit_list', list_id=list.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+              <form action="{{ url_for('delete_list', list_id=list.id) }}" method="POST" class="d-inline-block">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

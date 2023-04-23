@@ -1,0 +1,5 @@
+<label class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" hx-post="/list/{{ list.id }}/toggle_active"
+        hx-target="#notification-toggle-{{ list.id }}" hx-swap="innerHTML" {% if list.active %}checked{% endif %}>
+    <span class="form-check-label">Notifications</span>
+</label>
