@@ -33,5 +33,6 @@ function sendNotification() {
     });
 }
 
-// Send a notification every minute
-setInterval(sendNotification, 20 * 1000);
+// Send a notification every X minutes
+let numMinutes = 10;
+setInterval(sendNotification, 60 * numMinutes * 1000);
